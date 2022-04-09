@@ -16,16 +16,18 @@ public class Triangle {
     }
 
     public boolean exist(double ab, double ac, double bc) {
-        return (ab + ac) <= bc || (ab + bc) <= ac || (bc + ac) <= ab;
+        return ab + ac > bc && ab + bc > ac && ac + bc > ab;
     }
 
     public double area() {
+        double rsl = -1;
         double ab = first.distance(second);
         double ac = first.distance(third);
         double bc = second.distance(third);
-        double rsl = Math.sqrt(semiPerimeter(ab, ac, bc) * (semiPerimeter(ab, ac, bc) - ab) * (semiPerimeter(ab, ac, bc) - ac) * (semiPerimeter(ab, ac, bc) - bc));
+
         if (this.exist(ab, ac, bc)) {
-            rsl = -1;
+            double p = semiPerimeter(ab, ac, bc);
+            rsl = Math.sqrt(p * (p - ab) * (p - ac) * (p - bc));
         }
         return rsl;
     }
