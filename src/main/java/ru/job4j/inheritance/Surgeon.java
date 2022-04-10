@@ -11,6 +11,4 @@ public class Surgeon extends Doctor {
     public String branchName() {
         return null;
     }
-
-    ;
 }
