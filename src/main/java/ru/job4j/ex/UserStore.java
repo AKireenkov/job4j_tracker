@@ -7,6 +7,7 @@ public class UserStore {
         for (User el : users) {
             if (el.getUsername().equals(login)) {
                 user = el;
+                break;
             }
         }
         if (user == null) {
@@ -29,10 +30,10 @@ public class UserStore {
         try {
             User user = findUser(users, "Petr Arsentev");
             validate(user);
-        } catch (UserInvalidException ex) {
-            ex.printStackTrace();
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
+        } catch (UserInvalidException uie) {
+            uie.printStackTrace();
+        } catch (UserNotFoundException nfe) {
+            nfe.printStackTrace();
         }
     }
 }
