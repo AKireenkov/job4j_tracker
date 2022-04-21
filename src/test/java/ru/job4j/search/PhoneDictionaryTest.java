@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-
 public class PhoneDictionaryTest {
     @Test
     public void whenFindByName() {
