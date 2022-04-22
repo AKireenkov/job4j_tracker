@@ -15,8 +15,3 @@ public class UsageHashSet {
         }
     }
 }
-
-/*
- Добавьте в коллекцию autos марки машин: Lada, BMW, Volvo, Toyota.
-3. Добавьте цикл for-each и выведите элементы коллекции HashSet на консоль.
- */
