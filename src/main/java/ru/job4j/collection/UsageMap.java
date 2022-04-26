@@ -7,10 +7,11 @@ public class UsageMap {
     public static void main(String[] args) {
         HashMap<String, String> map = new HashMap<>();
         map.put("kireenkov@yandex.ru", "Kireenkov Andrey Alekseevich");
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            System.out.println(key + " = " + value);
+        map.put("kireenkov@yandex.ru", "Ivanov Sergey Petrovich");
+        map.put("Mosin@yandex.ru", "Mosin Dmitry Olegovich");
+        map.put("Mosin@yandex.ru", "Petrov Ivan Denisovich");
+        for (String key : map.keySet()) {
+            System.out.println(key + " = " + map.get(key));
         }
     }
 }
