@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class College {
+    @Deprecated
     public static void main(String[] args) {
         Student student = new Student();
         student.setName("Kireenkov Andrey Alekseevich");
