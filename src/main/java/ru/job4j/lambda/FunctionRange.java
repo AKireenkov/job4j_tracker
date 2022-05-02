@@ -9,7 +9,7 @@ public class FunctionRange {
         List<Double> rsl = new ArrayList<>();
         for (int i = start; i < end; i++) {
             func.apply((double) i);
-            rsl.add( func.apply((double) i));
+            rsl.add(func.apply((double) i));
         }
         return rsl;
     }
