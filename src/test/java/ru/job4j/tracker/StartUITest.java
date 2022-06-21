@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class StartUITest {
         Input in = new StubInput(
                 new ArrayList<>(List.of("1515", "0")));
         SqlTracker tracker = new SqlTracker();
+        tracker.init();
         List<UserAction> actions = new ArrayList<>(
                 Collections.singleton(new ExitActions(out))
         );
@@ -41,6 +43,7 @@ public class StartUITest {
                 new ArrayList<>(List.of("0"))
         );
         SqlTracker sqlTracker = new SqlTracker();
+        sqlTracker.init();
         List<UserAction> actions = List.of(new ExitActions(out));
         new StartUI(out).init(in, sqlTracker, actions);
         String ln = System.lineSeparator();
@@ -58,17 +61,21 @@ public class StartUITest {
                 new ArrayList<>(List.of("0", "Item name", "1")
                 ));
         SqlTracker sqlTracker = new SqlTracker();
+        sqlTracker.init();
         List<UserAction> actions =
                 (List.of(new CreateAction(out),
                         new ExitActions(out)));
         new StartUI(new StubOutput()).init(in, sqlTracker, actions);
-        assertThat(sqlTracker.findAll().get(0).getName(), is("Item name"));
+        Assert.assertTrue(sqlTracker.findByName("Item name")
+                .stream()
+                .anyMatch(el -> el.getName().equals("Item name")));
     }
 
     @Test
     public void whenReplaceItem() {
         Output out = new StubOutput();
         SqlTracker sqlTracker = new SqlTracker();
+        sqlTracker.init();
         Item item = sqlTracker.add(new Item("Replaced item"));
         String replacedName = "New item name";
         Input in = new StubInput(
@@ -85,6 +92,7 @@ public class StartUITest {
     public void whenDeleteItem() {
         Output out = new StubOutput();
         SqlTracker sqlTracker = new SqlTracker();
+        sqlTracker.init();
         Item item = sqlTracker.add(new Item("Deleted item"));
         Input in = new StubInput(
                 new ArrayList<>(List.of("0", String.valueOf(item.getId()), "1"))
@@ -101,6 +109,7 @@ public class StartUITest {
     public void whenReplaceItemTestOutputIsSuccessfully() {
         Output out = new StubOutput();
         SqlTracker sqlTracker = new SqlTracker();
+        sqlTracker.init();
         Item one = sqlTracker.add(new Item("test1"));
         String replaceName = "New Test Name";
         Input in = new StubInput(
@@ -129,6 +138,7 @@ public class StartUITest {
     public void whenFindAllItemTestOutputIsSuccessfully() {
         Output out = new StubOutput();
         SqlTracker sqlTracker = new SqlTracker();
+        sqlTracker.init();
         Item one = sqlTracker.add(new Item("test1"));
         Item two = sqlTracker.add(new Item("test2"));
         Input in = new StubInput(
@@ -156,6 +166,7 @@ public class StartUITest {
     public void whenFindByNameItemTestOutputIsSuccessfully() {
         Output out = new StubOutput();
         SqlTracker sqlTracker = new SqlTracker();
+        sqlTracker.init();
         Item one = sqlTracker.add(new Item("test1"));
         Input in = new StubInput(
                 new ArrayList<>(List.of("0", one.getName(), "1"))
@@ -181,6 +192,7 @@ public class StartUITest {
     public void whenFindByIdItemTestOutputIsSuccessfully() {
         Output out = new StubOutput();
         SqlTracker sqlTracker = new SqlTracker();
+        sqlTracker.init();
         Item one = sqlTracker.add(new Item("test1"));
         Input in = new StubInput(
                 new ArrayList<>(Arrays.asList("0", String.valueOf(one.getId()), "1"))

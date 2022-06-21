@@ -38,10 +38,10 @@ public class SqlTracker implements Store, AutoCloseable {
     public Item add(Item item) {
         Item rsl = null;
         try (PreparedStatement statement =
-                     cn.prepareStatement("insert into items(name, created) values (?, ?)")) {
+                     cn.prepareStatement("insert into items(name) values (?) RETURNING id")) {
             statement.setString(1, item.getName());
-            statement.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
-            rsl = statement.execute() ? item : null;
+            ResultSet resultSet = statement.executeQuery();
+            rsl = resultSet.next() ? findById(resultSet.getInt("id")) : null;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -115,11 +115,14 @@ public class SqlTracker implements Store, AutoCloseable {
 
     @Override
     public Item findById(int id) {
-        Item item = new Item();
+        Item item = null;
         try (PreparedStatement statement = cn.prepareStatement("select * from items where id = ?")) {
             statement.setInt(1, id);
-            item.setId(statement.executeQuery().getInt("id"));
-            item.setName(statement.executeQuery().getString("name"));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    item = new Item(resultSet.getInt("id"), resultSet.getString("name"));
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
