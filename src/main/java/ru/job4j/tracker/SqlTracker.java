@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import java.io.InputStream;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -29,7 +30,6 @@ public class SqlTracker implements Store, AutoCloseable {
     @Override
     public void close() throws Exception {
         if (cn != null) {
-            statement.close();
             cn.close();
         }
     }
@@ -37,9 +37,14 @@ public class SqlTracker implements Store, AutoCloseable {
     @Override
     public Item add(Item item) throws SQLException {
         try (PreparedStatement statement =
-                     cn.prepareStatement("insert into items(name, created) values (?, ?) RETURNING id")) {
+                     cn.prepareStatement("insert into items (name, created) values (?, ?)")) {
             statement.setString(1, item.getName());
-            statement.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
+            long millis = System.currentTimeMillis();
+            Timestamp timestamp = new Timestamp(millis);
+            LocalDateTime localDateTime = timestamp.toLocalDateTime();
+            Timestamp timestampFromLDT = Timestamp.valueOf(localDateTime);
+            statement.setTimestamp(2, timestampFromLDT);
+            statement.execute();
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
                     item.setId(resultSet.getInt(1));
@@ -125,7 +130,7 @@ public class SqlTracker implements Store, AutoCloseable {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    getItemFromTable(resultSet);
+                    item = getItemFromTable(resultSet);
                 }
             }
         } catch (Exception e) {
