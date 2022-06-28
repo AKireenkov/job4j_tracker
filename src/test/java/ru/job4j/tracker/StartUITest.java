@@ -3,7 +3,6 @@ package ru.job4j.tracker;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,7 +14,7 @@ import static org.hamcrest.Matchers.nullValue;
 
 public class StartUITest {
     @Test
-    public void whenInvalidExit() throws SQLException {
+    public void whenInvalidExit() {
         Output out = new StubOutput();
         Input in = new StubInput(
                 new ArrayList<>(List.of("1515", "0")));
@@ -37,7 +36,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenExit() throws SQLException {
+    public void whenExit() {
         Output out = new StubOutput();
         Input in = new StubInput(
                 new ArrayList<>(List.of("0"))
@@ -54,7 +53,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenCreateItem() throws SQLException {
+    public void whenCreateItem() {
         Output out = new StubOutput();
         Input in = new StubInput(
                 new ArrayList<>(List.of("0", "Item name", "1")
@@ -70,7 +69,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenReplaceItem() throws SQLException {
+    public void whenReplaceItem() {
         Output out = new StubOutput();
         MemTracker memTracker = new MemTracker();
         Item item = memTracker.add(new Item("Replaced item"));
@@ -86,7 +85,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenDeleteItem() throws SQLException {
+    public void whenDeleteItem() {
         Output out = new StubOutput();
         MemTracker memTracker = new MemTracker();
         Item item = memTracker.add(new Item("Deleted item"));
@@ -102,7 +101,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenReplaceItemTestOutputIsSuccessfully() throws SQLException {
+    public void whenReplaceItemTestOutputIsSuccessfully() {
         Output out = new StubOutput();
         MemTracker memTracker = new MemTracker();
         Item one = memTracker.add(new Item("test1"));
@@ -130,7 +129,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenFindAllItemTestOutputIsSuccessfully() throws SQLException {
+    public void whenFindAllItemTestOutputIsSuccessfully() {
         Output out = new StubOutput();
         MemTracker memTracker = new MemTracker();
         Item one = memTracker.add(new Item("test1"));
@@ -157,7 +156,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenFindByNameItemTestOutputIsSuccessfully() throws SQLException {
+    public void whenFindByNameItemTestOutputIsSuccessfully() {
         Output out = new StubOutput();
         MemTracker memTracker = new MemTracker();
         Item one = memTracker.add(new Item("test1"));
@@ -182,7 +181,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenFindByIdItemTestOutputIsSuccessfully() throws SQLException {
+    public void whenFindByIdItemTestOutputIsSuccessfully() {
         Output out = new StubOutput();
         MemTracker memTracker = new MemTracker();
         Item one = memTracker.add(new Item("test1"));
