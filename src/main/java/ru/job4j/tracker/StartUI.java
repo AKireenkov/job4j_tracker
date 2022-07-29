@@ -33,15 +33,13 @@ public class StartUI {
     public static void main(String[] args) {
         Output output = new ConsoleOutput();
         Input input = new ValidateInput(output, new ConsoleInput());
-        try (SqlTracker tracker = new SqlTracker()) {
-            tracker.init();
+        MemTracker tracker = new MemTracker();
             List<UserAction> actions = List.of(
                     new CreateAction(output), new ShowAllActions(output), new EditAction(output), new DeleteActions(output),
-                    new FindByIdActions(output), new FindByNameActions(output), new ExitActions(output)
+                    new FindByIdActions(output), new FindByNameActions(output), new ExitActions(output),
+                    new Create10000Actions(output), new DeleteAll(output)
             );
             new StartUI(output).init(input, tracker, actions);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 }
