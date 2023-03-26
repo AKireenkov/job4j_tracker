@@ -28,8 +28,9 @@ public class HbmTracker implements Store, AutoCloseable {
             session.getTransaction().commit();
         } catch (Exception ex) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        session.close();
         return item;
     }
 
@@ -44,8 +45,9 @@ public class HbmTracker implements Store, AutoCloseable {
             rsl = true;
         } catch (Exception ex) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        session.close();
         return rsl;
     }
 
@@ -61,8 +63,9 @@ public class HbmTracker implements Store, AutoCloseable {
             session.getTransaction().commit();
         } catch (Exception ex) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        session.close();
         return affectRows > 0;
     }
 
